@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1690" viewBox="0 0 1800 1690">
+<rect width="1800" height="1690" fill="#FFFFFF"/>
+<text x="900.0" y="42" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" fill="#17324D" text-anchor="middle">Diagrama UML de secuencia</text>
+<text x="900.0" y="73" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#536575" text-anchor="middle">Caso de uso: postularse y aceptar trabajador · flujo principal de SERVIX</text>
+<rect x="40.0" y="92" width="220" height="66" rx="12" fill="#EAF2F8" stroke="#2A6F97" stroke-width="2"/>
+<text x="150" y="119" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#17324D" text-anchor="middle">Trabajador</text>
+<line x1="150" y1="158" x2="150" y2="1598" stroke="#7A8B99" stroke-width="2" stroke-dasharray="8 7"/>
+<rect x="330.0" y="92" width="240" height="66" rx="12" fill="#EAF2F8" stroke="#2A6F97" stroke-width="2"/>
+<text x="450" y="119" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#17324D" text-anchor="middle">Interfaz SERVIX</text>
+<line x1="450" y1="158" x2="450" y2="1598" stroke="#7A8B99" stroke-width="2" stroke-dasharray="8 7"/>
+<rect x="650.0" y="92" width="200" height="66" rx="12" fill="#EAF2F8" stroke="#2A6F97" stroke-width="2"/>
+<text x="750" y="119" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#17324D" text-anchor="middle">API REST</text>
+<line x1="750" y1="158" x2="750" y2="1598" stroke="#7A8B99" stroke-width="2" stroke-dasharray="8 7"/>
+<rect x="925.0" y="92" width="250" height="66" rx="12" fill="#EAF2F8" stroke="#2A6F97" stroke-width="2"/>
+<text x="1050" y="119" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#17324D" text-anchor="middle">Gestor de solicitudes</text>
+<line x1="1050" y1="158" x2="1050" y2="1598" stroke="#7A8B99" stroke-width="2" stroke-dasharray="8 7"/>
+<rect x="1225.0" y="92" width="250" height="66" rx="12" fill="#EAF2F8" stroke="#2A6F97" stroke-width="2"/>
+<text x="1350" y="119" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#17324D" text-anchor="middle">Almacenamiento RAM</text>
+<line x1="1350" y1="158" x2="1350" y2="1598" stroke="#7A8B99" stroke-width="2" stroke-dasharray="8 7"/>
+<rect x="1540.0" y="92" width="220" height="66" rx="12" fill="#EAF2F8" stroke="#2A6F97" stroke-width="2"/>
+<text x="1650" y="119" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#17324D" text-anchor="middle">Solicitante</text>
+<line x1="1650" y1="158" x2="1650" y2="1598" stroke="#7A8B99" stroke-width="2" stroke-dasharray="8 7"/>
+<rect x="446.0" y="205" width="8" height="440" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="746.0" y="250" width="8" height="360" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="1046.0" y="295" width="8" height="255" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="1346.0" y="340" width="8" height="165" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="446.0" y="655" width="8" height="310" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="746.0" y="695" width="8" height="255" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="1046.0" y="735" width="8" height="235" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="1346.0" y="780" width="8" height="155" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="1646.0" y="1100" width="8" height="250" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="446.0" y="1150" width="8" height="230" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="746.0" y="1190" width="8" height="250" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="1046.0" y="1230" width="8" height="190" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<rect x="1346.0" y="1270" width="8" height="130" fill="#C7DAE8" stroke="#2A6F97" stroke-width="1.2"/>
+<line x1="150" y1="205" x2="450" y2="205" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="155.95" y="176" width="288.1" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="300.0" y="192" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">1. Buscar trabajos por zona</text>
+<line x1="450" y1="252" x2="750" y2="252" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="476.55" y="223" width="246.9" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="600.0" y="239" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">GET /services?zona=Suba</text>
+<line x1="750" y1="299" x2="1050" y2="299" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="766.25" y="270" width="267.5" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="900.0" y="286" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">listarPublicados(filtros)</text>
+<line x1="1050" y1="346" x2="1350" y2="346" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="1030.2" y="317" width="339.6" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1200.0" y="333" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">consultar solicitudes publicadas</text>
+<line x1="1350" y1="393" x2="1050" y2="393" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="1120.0" y="364" width="160" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1200.0" y="380" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">lista filtrada</text>
+<line x1="1050" y1="440" x2="750" y2="440" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="820.0" y="411" width="160" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="900.0" y="427" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">resultados</text>
+<line x1="750" y1="487" x2="450" y2="487" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="520.0" y="458" width="160" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="600.0" y="474" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">200 OK + items</text>
+<line x1="450" y1="534" x2="150" y2="534" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="140.5" y="505" width="319.0" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="300.0" y="521" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">mostrar resultados disponibles</text>
+<line x1="150" y1="581" x2="450" y2="581" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="166.25" y="552" width="267.5" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="300.0" y="568" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">2. Presionar “Postularme”</text>
+<line x1="450" y1="628" x2="750" y2="628" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="435.35" y="599" width="329.3" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="600.0" y="615" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">POST /services/:id/applications</text>
+<line x1="750" y1="675" x2="1050" y2="675" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="735.35" y="646" width="329.3" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="900.0" y="662" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">validar estado y disponibilidad</text>
+<line x1="1050" y1="722" x2="1350" y2="722" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="1097.15" y="693" width="205.70000000000002" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1200.0" y="709" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">guardar postulacion</text>
+<line x1="1350" y1="769" x2="1050" y2="769" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="1107.45" y="740" width="185.10000000000002" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1200.0" y="756" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">registro correcto</text>
+<line x1="1050" y1="816" x2="1350" y2="816" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="1061.1" y="787" width="277.8" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1200.0" y="803" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">crear notificacion interna</text>
+<line x1="1350" y1="863" x2="1050" y2="863" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="1076.55" y="834" width="246.9" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1200.0" y="850" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">notificacion registrada</text>
+<line x1="1050" y1="910" x2="750" y2="910" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="820.0" y="881" width="160" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="900.0" y="897" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">201 Created</text>
+<line x1="750" y1="957" x2="450" y2="957" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="455.95" y="928" width="288.1" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="600.0" y="944" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">confirmacion de postulacion</text>
+<line x1="450" y1="1004" x2="150" y2="1004" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="207.45" y="975" width="185.10000000000002" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="300.0" y="991" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">estado: pendiente</text>
+<line x1="1650" y1="1051" x2="450" y2="1051" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="869.9" y="1022" width="360.20000000000005" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1050.0" y="1038" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">3. Revisar postulaciones y aceptar</text>
+<line x1="450" y1="1098" x2="750" y2="1098" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="461.1" y="1069" width="277.8" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="600.0" y="1085" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">PATCH /services/:id/accept</text>
+<line x1="750" y1="1145" x2="1050" y2="1145" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="750.8" y="1116" width="298.40000000000003" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="900.0" y="1132" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">validar propietario y estado</text>
+<line x1="1050" y1="1192" x2="1350" y2="1192" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="1040.5" y="1163" width="319.0" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1200.0" y="1179" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">asignar trabajador; EN_PROCESO</text>
+<line x1="1350" y1="1239" x2="1050" y2="1239" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="1107.45" y="1210" width="185.10000000000002" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1200.0" y="1226" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">cambios guardados</text>
+<line x1="1050" y1="1286" x2="1350" y2="1286" stroke="#2A6F97" stroke-width="2.3" marker-end="url(#arrowBlue)"/>
+<rect x="1040.5" y="1257" width="319.0" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1200.0" y="1273" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">crear avisos para ambas partes</text>
+<line x1="1350" y1="1333" x2="1050" y2="1333" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="1071.4" y="1304" width="257.20000000000005" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1200.0" y="1320" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">notificaciones guardadas</text>
+<line x1="1050" y1="1380" x2="750" y2="1380" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="786.85" y="1351" width="226.3" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="900.0" y="1367" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">solicitud actualizada</text>
+<line x1="750" y1="1427" x2="450" y2="1427" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="497.15" y="1398" width="205.70000000000002" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="600.0" y="1414" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">200 OK / EN_PROCESO</text>
+<line x1="450" y1="1474" x2="1650" y2="1474" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="895.65" y="1445" width="308.70000000000005" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="1050.0" y="1461" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">confirmar trabajador aceptado</text>
+<line x1="450" y1="1521" x2="150" y2="1521" stroke="#2A9D8F" stroke-width="2.3" stroke-dasharray="7 5" marker-end="url(#arrowTeal)"/>
+<rect x="150.79999999999998" y="1492" width="298.40000000000003" height="22" rx="4" fill="#FFFFFF" opacity="0.96"/>
+<text x="300.0" y="1508" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#1F2933" text-anchor="middle">mostrar postulacion aceptada</text>
+<defs><marker id="arrowBlue" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#2A6F97"/></marker><marker id="arrowTeal" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#2A9D8F"/></marker></defs>
+<rect x="70" y="1620" width="1660" height="45" rx="10" fill="#F4F8FB" stroke="#D8E3EB"/>
+<text x="900" y="1648" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#536575" text-anchor="middle">Linea continua: llamada · Linea discontinua: respuesta · Las lineas de vida verticales representan los participantes del intercambio.</text>
+</svg>
