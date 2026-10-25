@@ -1,0 +1,1029 @@
+{
+  "info": {
+    "_postman_id": "aa5d9f0e-61ca-4f88-82ec-723e1fcf73a1",
+    "name": "SERVIX API - Taller 3",
+    "description": "Coleccion de pruebas de la API REST de SERVIX. Ejecutar requests en orden: se guardan automaticamente tokens e IDs. El pago es unicamente simulado y usa datos sinteticos; no introducir datos reales.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "tokenSolicitante",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "tokenTrabajador",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "emailSolicitante",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "emailTrabajador",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "contrasenaDemo",
+      "value": "ServixDemo2026!",
+      "type": "string"
+    },
+    {
+      "key": "idSolicitante",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "idTrabajador",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "solicitudId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "postulacionId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "notificacionId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Health / estado de la API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/health",
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "Endpoint publico para verificar que el servidor esta activo."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Registrar solicitante",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/auth/register",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombreCompleto\": \"Camila Solano (solicitante demo)\",\n  \"correoElectronico\": \"{{emailSolicitante}}\",\n  \"telefono\": \"3001234567\",\n  \"contrasena\": \"{{contrasenaDemo}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Crea un correo unico en cada ejecucion de la coleccion. Guarda el token e ID para los siguientes requests."
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set(\"emailSolicitante\", \"solicitante.\" + Date.now() + \".\" + Math.random().toString(36).slice(2, 7) + \"@servix.test\");",
+              "pm.collectionVariables.set(\"contrasenaDemo\", \"ServixDemo2026!\");"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La cuenta se crea con HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "const json = pm.response.json();",
+              "pm.collectionVariables.set(\"tokenSolicitante\", json.data.token);",
+              "pm.collectionVariables.set(\"idSolicitante\", json.data.usuario.id);",
+              "pm.test(\"La respuesta no expone el hash de la contrasena\", function () { pm.expect(json.data.usuario.passwordHash).to.be.undefined; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Registrar trabajador",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/auth/register",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombreCompleto\": \"Mateo Rojas (trabajador demo)\",\n  \"correoElectronico\": \"{{emailTrabajador}}\",\n  \"telefono\": \"3101234567\",\n  \"contrasena\": \"{{contrasenaDemo}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "SERVIX conserva una cuenta comun: el mismo usuario puede solicitar y prestar servicios segun la accion."
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set(\"emailTrabajador\", \"trabajador.\" + Date.now() + \".\" + Math.random().toString(36).slice(2, 7) + \"@servix.test\");",
+              "pm.collectionVariables.set(\"contrasenaDemo\", pm.collectionVariables.get(\"contrasenaDemo\") || \"ServixDemo2026!\");"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La cuenta se crea con HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "const json = pm.response.json();",
+              "pm.collectionVariables.set(\"tokenTrabajador\", json.data.token);",
+              "pm.collectionVariables.set(\"idTrabajador\", json.data.usuario.id);",
+              "pm.test(\"La cuenta inicia pendiente de verificacion\", function () { pm.expect(json.data.usuario.estadoVerificacion).to.eql(\"PENDIENTE\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Login del solicitante (opcional; renueva token)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/auth/login",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"correoElectronico\": \"{{emailSolicitante}}\",\n  \"contrasena\": \"{{contrasenaDemo}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Sirve para probar el inicio de sesion despues del registro."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Login exitoso\", function () { pm.response.to.have.status(200); });",
+              "pm.collectionVariables.set(\"tokenSolicitante\", pm.response.json().data.token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Registrar metadata del documento",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/me/verification-document",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombreArchivo\": \"documento-demo.png\",\n  \"mimeType\": \"image/png\",\n  \"tamanoBytes\": 240000\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Simula el registro del documento. No se carga ni almacena el archivo real."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Publicar solicitud de servicio",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/services",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Pintar una habitacion\",\n  \"descripcion\": \"Necesito pintar una habitacion de aproximadamente 12 metros cuadrados. La pared ya esta preparada.\",\n  \"categoria\": \"Pintura y mantenimiento\",\n  \"precio\": 180000,\n  \"fecha\": \"2027-12-01\",\n  \"hora\": \"09:00\",\n  \"ciudad\": \"Bogota\",\n  \"zona\": \"Suba\",\n  \"direccionReferencia\": \"Referencia privada: cerca de la plaza principal\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "La fecha de prueba se deja en el futuro. El identificador se guarda automaticamente para usarlo en el resto de la coleccion."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La solicitud se publica con HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "const json = pm.response.json();",
+              "pm.collectionVariables.set(\"solicitudId\", json.data.solicitud.id);",
+              "pm.test(\"El estado inicial es PUBLICADO\", function () { pm.expect(json.data.solicitud.estado).to.eql(\"PUBLICADO\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 - Listar trabajos por zona y categoria",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/services?zona=Suba&categoria=Pintura&page=1&limit=10",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenTrabajador}}",
+              "type": "string"
+            }
+          ]
+        },
+        "description": "Prueba filtros de zona, categoria y paginacion. Los resultados incluyen solo solicitudes PUBLICADO."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 - Consultar detalle de la solicitud",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenTrabajador}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 - Activar disponibilidad del trabajador",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/me/availability",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenTrabajador}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"disponible\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 - Postularse a la solicitud",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/applications",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenTrabajador}}",
+              "type": "string"
+            }
+          ]
+        },
+        "description": "El endpoint no requiere body. La disponibilidad debe haberse activado en el paso anterior."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La postulacion se crea con HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "const json = pm.response.json();",
+              "pm.collectionVariables.set(\"postulacionId\", json.data.postulacion.id);",
+              "pm.test(\"La postulacion queda pendiente\", function () { pm.expect(json.data.postulacion.estado).to.eql(\"PENDIENTE\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "11 - Ver postulaciones recibidas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/applications",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "12 - Aceptar trabajador",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/accept",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"postulacionId\": \"{{postulacionId}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La aceptacion se procesa con HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"La solicitud cambia a EN_PROCESO\", function () { pm.expect(pm.response.json().data.solicitud.estado).to.eql(\"EN_PROCESO\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "13 - Enviar mensaje del solicitante",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/messages",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"Hola, confirmo que la hora de inicio es a las 9:00 a. m.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "14 - Enviar mensaje del trabajador",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/messages",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenTrabajador}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"Confirmado. Llevare mis herramientas y llegare a tiempo.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "15 - Consultar chat del servicio",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/messages",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "16 - Simular pago (NO REAL)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/payments",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"numeroTarjetaPrueba\": \"4242424242424242\",\n  \"fechaExpiracionPrueba\": \"12/29\",\n  \"cvvPrueba\": \"123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Solo usar la tarjeta sintetica de demostracion indicada. Nunca ingreses informacion de una tarjeta real."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"El pago de prueba se registra\", function () { pm.response.to.have.status(201); });",
+              "const json = pm.response.json();",
+              "pm.test(\"No hay transaccion real\", function () { pm.expect(json.data.esTransaccionReal).to.eql(false); pm.expect(json.data.pago.modo).to.eql(\"SIMULADO\"); });",
+              "pm.test(\"La solicitud queda PAGADO\", function () { pm.expect(json.data.solicitud.estado).to.eql(\"PAGADO\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "17 - Marcar servicio como completado",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/complete",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"El servicio se completa\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"El estado queda COMPLETADO\", function () { pm.expect(pm.response.json().data.solicitud.estado).to.eql(\"COMPLETADO\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "18 - Calificacion del solicitante al trabajador",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/ratings",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"estrellas\": 5,\n  \"comentario\": \"Trabajo puntual y bien terminado.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "19 - Calificacion del trabajador al solicitante",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/ratings",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenTrabajador}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"estrellas\": 5,\n  \"comentario\": \"La solicitud fue clara y la coordinacion fue respetuosa.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "20 - Historial del solicitante",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/me/history",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "21 - Historial del trabajador",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/me/history",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenTrabajador}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "22 - Enviar reporte / PQRS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/reports",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"asunto\": \"Consulta sobre el servicio\",\n  \"mensaje\": \"Deseo confirmar como puedo consultar el seguimiento de una solicitud desde el historial.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "23 - Consultar notificaciones sin leer",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/me/notifications?noLeidas=true",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Se consultan notificaciones\", function () { pm.response.to.have.status(200); });",
+              "const items = pm.response.json().data.items;",
+              "if (items && items.length > 0) pm.collectionVariables.set(\"notificacionId\", items[0].id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "24 - Marcar notificacion como leida",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/me/notifications/{{notificacionId}}/read",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        },
+        "description": "Requiere que el paso anterior haya devuelto al menos una notificacion para el solicitante."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La respuesta es correcta\", function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+              "pm.test(\"La API responde JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "25 - Intentar cancelar servicio completado (debe fallar)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/services/{{solicitudId}}/cancel",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenSolicitante}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"motivo\": \"Prueba de regla de negocio\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Prueba negativa intencional: el resultado esperado es 409 Conflict porque el servicio ya se completó."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La cancelacion de un servicio completado se rechaza con HTTP 409\", function () { pm.response.to.have.status(409); });",
+              "pm.test(\"La API devuelve un error estructurado\", function () { pm.expect(pm.response.json().success).to.eql(false); pm.expect(pm.response.json().error.code).to.eql(\"CANCELLATION_NOT_ALLOWED\"); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
